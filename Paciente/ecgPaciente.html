@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../media/logo-p.png">
+    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>SPORTHOLTER</title>
+</head>
+<body class="dash">
+    <input type="checkbox" id="menu-toggle">
+    <div class="sidebar">
+        <div class="side-header">
+            <a title="Logo_login" href="../index.html">
+                <img src="../media/logo-dash.svg" alt="Logo-dash-2" style="height: 45px;">
+            </a>  
+        </div>
+        
+        <div class="side-content">
+            <div class="profile">
+                <div class="profile-img bg-img" style="background-image: url(../media/2.jpg)"></div>
+                <h4>Nombre</h4>
+                <small>Paciente</small>
+            </div>
+
+            <div class="side-menu">
+                <ul>
+                    <li>
+                        <a href="inicioPaciente.html">
+                            <i class="fa-solid fa-house"></i>
+                            <small>Inicio</small>
+                         </a>
+                     </li>
+                    <li>
+                       <a href="confPaciente.html">
+                        <i class="fa-solid fa-pencil"></i>
+                            <small>Modificar</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="ecgPaciente.html" class="active">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            <small>Consultar ECG</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="pacientes.html">
+                            <i class="fa-regular fa-calendar"></i>
+                            <small>Solicitar cita</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa-solid fa-bell"></i>
+                            <small>Notificaciones</small>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        
+        <header class="header-dash">
+            <div class="header-content">
+
+                <div class="label">
+                    <label for="menu-toggle">
+                        <i class="fa-solid fa-bars" style="color: #0a0a0a;"></i>
+                    </label>
+                </div>
+                
+                
+                <div class="header-menu">
+                                      
+                    <div class="user">
+                        <div class="bg-img" style="background-image: url(../media/2.jpg)"></div>
+                        <a href="../index.html">
+                            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #0a0a0a;"></i>
+                            <span>Salir</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            
+            <div class="page-header">
+                <h1>ECG</h1>
+                <small>ECG/</small>
+            </div>
+            
+            <div class="page-content">
+
+                <div class="regresar">
+                    <p>Tabla de examenes realizados</p>
+                </div>
+
+                <form class="fecha">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" id="fecha" name="fecha">
+                    <button><i class="fa-solid fa-magnifying-glass" ></i></button>
+                </form>
+                  
+                <section class="table__body">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th> Nombre </th>
+                                <th> Apellido </th>
+                                <th> Documento </th>
+                                <th> ECG </th>
+                                <th> Fecha procedimiento </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>  </td>
+                                <td>  </td>
+                                <td>  </td>
+                                <td>  </td>
+                                <td>  </td>
+                            </tr>
+                            <tr>
+                                <td>  </td>
+                                <td>  </td>
+                                <td>  </td>
+                                <td>  </td>
+                                <td>  </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    <script src="../js/pacientes.js"></script>
+</body>
+</html>

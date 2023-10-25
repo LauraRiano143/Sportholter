@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../../media/logo-p.png">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>SPORTHOLTER</title>
+</head>
+<body class="dash">
+    <input type="checkbox" id="menu-toggle">
+    <div class="sidebar">
+        <div class="side-header">
+            <a href="../../index.html">
+                <img src="../../media/logo-dash.svg" alt="Logo-dash-2" style="height: 45px;">
+            </a>  
+        </div>
+        
+        <div class="side-content">
+            <div class="profile">
+                <div class="profile-img bg-img" style="background-image: url(../../media/1.png)"></div>
+                <h4>Nombre</h4>
+                <small>Especialista</small>
+            </div>
+
+            <div class="side-menu">
+                <ul>
+                    <li>
+                        <a href="../inicio.html" >
+                            <i class="fa-solid fa-house"></i>
+                            <small>Inicio</small>
+                         </a>
+                     </li>
+                    <li>
+                       <a href="../registro_p.html">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <small>Registrar</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="consulta_p.html"  class="active">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <small>Consultar</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="../ECG/proceso_ecg.html">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            <small>ECG</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="../pacientes.html">
+                            <i class="fa-solid fa-user-group"></i>
+                            <small>Mis pacientes</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="#">
+                            <i class="fa-solid fa-bell"></i>
+                            <small>Notificaciones</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../soporte.html">
+                             <i class="fa-solid fa-question" style="color: #0a0a0a;"></i>
+                             <small>Soporte</small>
+                         </a>
+                     </li>
+                    <li>
+                        <a href="../configuracion.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <small>Configuración</small>
+                        </a>
+                     </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        
+        <header class="header-dash">
+            <div class="header-content">
+
+                <div class="label">
+                    <label for="menu-toggle">
+                        <i class="fa-solid fa-bars" style="color: #0a0a0a;"></i>
+                    </label>
+                </div>
+                
+                
+                <div class="header-menu">
+                                      
+                    <div class="user">
+                        <div class="bg-img" style="background-image: url(../../media/1.png)"></div>
+                        <a href="../../index.html">
+                            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #0a0a0a;"></i>
+                            <span>Salir</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            <div class="page-header">
+                <h1>Consultar</h1>
+                <small>Consultar/Datos</small>
+            </div>
+            <div class="page-content">
+                <div class="table-register">
+
+                    <div class="regresar">
+                        <a href="consulta_p.html"><i class="fa-solid fa-arrow-left" style="color: #0a0a0a"></i></a>
+                        <p>Datos Personales</p>
+                    </div>
+                    
+                    <br><br>
+                    <p class="parrafo"> Si deseas modificar el registro, cambia directamente el dato en el formulario y presiona Editar
+                    </p>
+                    <br>
+                    <form class="formulario">
+
+                        <div class="columna1">
+                            <div class="grupo-campo">
+                                <div class="fila1">
+                                    <label for="primer-nombre">Primer nombre*</label>
+                                    <input autocomplete="off" type="text" id="primer-nombre" name="primer-nombre" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="columna2">
+                            <div class="grupo-campo">
+                                <div class="fila1">
+                                    <label for="segundo-nombre">Segundo nombre</label>
+                                    <input autocomplete="off" type="text" id="segundo-nombre" name="segundo-nombre">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna3">
+                            <div class="grupo-campo">
+                                <div class="fila1">
+                                    <label for="primer-apellido">Primer apellido*</label>
+                                    <input autocomplete="off" type="text" id="primer-apellido" name="primer-apellido" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna4">
+                            <div class="grupo-campo">
+                                <div class="fila1">
+                                    <label for="segundo-apellido">Segundo apellido*</label>
+                                    <input autocomplete="off" type="text" id="segundo-apellido" name="segundo-apellido" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna1">
+                            <div class="grupo-campo">
+                                <div class="fila2">
+                                    <label for="tipo-documento">Tipo de documento*</label>
+                                    <select id="tipo-documento" name="tipo-documento" required>
+                                        <option value="">Selecciona el tipo</option>
+                                        <option value="1">Cédula de Ciudadanía</option>
+                                        <option value="2">Cédula de Extranjería</option>
+                                        <option value="3">Tarjeta de Identidad</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna2">
+                            <div class="grupo-campo">
+                                <div class="fila2">
+                                    <label for="numero-documento">Número de documento*</label>
+                                    <input autocomplete="off" type="text" id="numero-documento" name="numero-documento" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna3">
+                            <div class="grupo-campo">
+                                <div class="fila2">
+                                    <label for="ciudad-expedicion">Ciudad de expedición*</label>
+                                    <input autocomplete="off" type="text" id="ciudad-expedicion" name="ciudad-expedicion" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna4">
+                            <div class="grupo-campo">
+                                <div class="fila2">
+                                    <label for="fecha-nacimiento">Fecha de nacimiento*</label>
+                                    <input autocomplete="off" type="date" id="fecha-nacimiento" name="fecha-nacimiento" required>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="columna1">
+                            <div class="grupo-campo">
+                              <div class="fila3">
+                                <label for="genero">Género*</label>
+                                <select id="genero" name="genero" required>
+                                  <option value="">Selecciona tu género</option>
+                                  <option value="1">Femenino</option>
+                                  <option value="2">Masculino</option>
+                                  <option value="3">Otro</option>
+                                </select>
+                              </div>
+                            </div>
+                          </div>
+                          
+                        <div class="columna2">
+                            <div class="grupo-campo">
+                                <div class="fila3">
+                                    <label for="telefono">Teléfono*</label>
+                                    <input autocomplete="off" type="tel" id="telefono" name="telefono" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="columna4">
+                            <div class="grupo-campo">
+                                <div class="fila3">
+                                    <label for="email">Correo electrónico*</label>
+                                    <input autocomplete="off" type="email" id="email" name="email" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="columna3">
+                            <div class="grupo-campo">
+                                <div class="fila4">
+                                    <label for="actividad-fisica">Actividad física que realiza</label>
+                                    <input autocomplete="off" type="text" id="actividad" name="actividad" placeholder="Deporte">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="columna4">
+                            <div class="grupo-campo">
+                                <div class="fila4">
+                                    <label for="frecuencia-fisica">Frecuencia de actividad física</label>
+                                    <input autocomplete="off" type="text" id="frecuencia" name="frecuencia" placeholder="Días a la semana">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="botones-reg">
+                            <button type="submit" id="editar">Editar</button>
+                        </div>
+                    </form>   
+                    <div class="eliminar">
+                        <a href='#' onclick="eliminarPaciente()"><p>Eliminar paciente</p></a>
+                    </div>    
+                </div>
+            </div>
+        </main> 
+    </div>
+    <script src="../../js/readPaciente.js"></script>
+    <script src="../../js/modificarPaciente.js"></script>
+    <script src="../../js/eliminarPaciente.js"></script>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../style.css">
+    <link rel="icon" href="../../media/logo-p.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>SPORTHOLTER</title>
+</head>
+<body class="dash">
+    <input type="checkbox" id="menu-toggle">
+    <div class="sidebar">
+        <div class="side-header">
+            <a href="../../index.html">
+                <img src="../../media/logo-dash.svg" alt="Logo-dash-2" style="height: 45px;">
+            </a>  
+        </div>
+        
+        <div class="side-content">
+            <div class="profile">
+                <div class="profile-img bg-img" style="background-image: url(../../media/1.png)"></div>
+                <h4>Nombre</h4>
+                <small>Especialista</small>
+            </div>
+
+            <div class="side-menu">
+                <ul>
+                    <li>
+                        <a href="../inicio.html" >
+                            <i class="fa-solid fa-house"></i>
+                            <small>Inicio</small>
+                         </a>
+                     </li>
+                    <li>
+                       <a href="../registro_p.html">
+                            <i class="fa-solid fa-user-plus"></i>
+                            <small>Registrar</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="consulta_p.html" class="active">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <small>Consultar</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="../ECG/proceso_ecg.html">
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            <small>ECG</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="../pacientes.html">
+                            <i class="fa-solid fa-user-group"></i>
+                            <small>Mis pacientes</small>
+                        </a>
+                    </li>
+                    <li>
+                       <a href="#">
+                            <i class="fa-solid fa-bell"></i>
+                            <small>Notificaciones</small>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../soporte.html">
+                             <i class="fa-solid fa-question" style="color: #0a0a0a;"></i>
+                             <small>Soporte</small>
+                         </a>
+                     </li>
+                    <li>
+                        <a href="../configuracion.html">
+                            <i class="fa-solid fa-gear"></i>
+                            <small>Configuración</small>
+                        </a>
+                     </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    
+    <div class="main-content">
+        
+        <header class="header-dash">
+            <div class="header-content">
+
+                <div class="label">
+                    <label for="menu-toggle">
+                        <i class="fa-solid fa-bars" style="color: #0a0a0a;"></i>
+                    </label>
+                </div>
+                
+                
+                <div class="header-menu">
+                                      
+                    <div class="user">
+                        <div class="bg-img" style="background-image: url(../../media/1.png)"></div>
+                        <a href="../../index.html">
+                            <i class="fa-solid fa-arrow-right-from-bracket" style="color: #0a0a0a;"></i>
+                            <span>Salir</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <main>
+            
+            <div class="page-header">
+                <h1>Consultar</h1>
+                <small>Consultar/</small>
+            </div>
+            
+            <div class="page-content">
+                <div class="search"> 
+
+                    <div class="consulta-img">
+                        <img src="../../media/consulta.svg" alt="consulta"/>
+                    </div>
+                    
+                    <div class="busqueda">
+                        <p>Busqueda de paciente</p>
+
+                        <div class="consulta-u">
+                            <form id="consultaP" method="POST">
+                              <input autocomplete="off" type="text" id="documento" name="documento" placeholder="Documento" required>
+                              <button type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
+                            </form>
+                        </div>
+                          
+                          
+                    </div>
+
+                </div>
+            </div>
+
+        </main>
+        
+    </div>
+    <script src="../../js/consultarPaciente.js"></script>
+</body>
+</html>

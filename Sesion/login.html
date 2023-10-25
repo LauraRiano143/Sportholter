@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="../media/logo-p.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>SPORTHOLTER</title>
+</head>
+
+<body class="log">
+
+    <div class="login">
+        <div class="imagen">
+            <a title="Logo_login" href="../index.html">
+                <img src="../media/Login.png" alt="Logo_login" style="height: 38em;"/>
+            </a>
+        </div>
+
+        <div class="contenedor">
+            
+            <div class="titulo">
+                <h4>SPORTHOLTER</h4>
+            </div>
+
+            <div class="inicio">
+                <h3>Bienvenido</h3>
+            </div>
+
+            <form id="form_login" method="POST">
+                
+                <div class="cont">
+                    <h5>Correo</h5>
+                    <div class="agrupar">
+                        <img src="../media/lock.svg" alt="contraseña" style="height: 2rem; background-color: gray">
+                        <input class="in" autocomplete="off" type="email" id="txt_email" name="txt_email" placeholder="-" required=""/>
+                        <input type="hidden" name="correo_registro" value="CORREO_DE_REGISTRO_DEL_USUARIO">
+                    </div>
+                </div>
+                
+                <div class="cont">
+                    <h5>Contraseña</h5>
+                    <div class="agrupar">
+                        <img src="../media/lock.svg" alt="contraseña" style="height: 2rem; background-color: gray">
+                        <input class="in" type="password" autocomplete="off" id="txt_pass" name="txt_pass" placeholder="-"/>
+                    </div>
+                </div>
+                
+                <div class="item">
+                        <a href="olvido_contraseña.html" class="olvidar">¿Olvidaste tu contraseña?</a>
+                </div>
+
+                <div class="check">
+                    <input type="checkbox" class="mycheck" id="mycheck">
+                    <label for="mycheck">¿Eres paciente?</label>
+                </div>
+                
+                <div class="enviar">
+                    <a>
+                        <button type="submit">Ingresar</button>
+                    </a>
+                </div>
+            </form>
+            
+            <div class="item">
+                <h5>¿No tienes cuenta?</h5>
+                <a href="register.html" class="olvidar">Registrate</a>
+            </div>
+
+            <div class="item">
+                <a href="../index.html" class="volver">Regresar al inicio</a>
+            </div>
+
+        </div>
+        
+    </div>
+
+    <script src="../js/login.js"></script>
+    
+</body>
+</html>

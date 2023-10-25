@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="icon" href="../media/logo-p.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../style.css">
+    <title>SPORTHOLTER</title>
+    
+</head>
+
+<body class="log">
+
+    <div class="login">
+        <div class="imagen">
+            <a title="Logo_home" href="../index.html"><img src="../media/Login.png" alt="Logo_register" style="height: 38em;"/></a>
+        </div>
+
+        <div class="contenedor">
+            
+            <div class="titulo">
+                <h4>SPORTHOLTER</h4>
+            </div>
+
+            <div class="reg">
+                <h3>Regístrate</h3>
+            </div>
+            
+            <form id="form_register" method="POST">
+                <div class="cont">
+                    <h5>Nombre usuario</h5>
+                    <div class="agrupar">
+                        <img src="../media/add.svg" alt="usuario" style="height: 2rem; background-color: gray;">
+                        <input autocomplete="off" class="in" type="text" id="txt_usuario" name="txt_usuario" placeholder="-" required=""/>
+                    </div>
+                </div>
+                
+                <div class="cont">
+                    <h5>Correo</h5>
+                    <div class="agrupar">
+                        <img src="../media/lock.svg" alt="contraseña" style="height: 2rem; background-color: gray">
+                        <input autocomplete="off" class="in" type="e_mail" id="txt_email" name="txt_email"placeholder="-" required=""/>
+                    </div>
+                </div>
+    
+                <div class="cont">
+                    <h5>Contraseña</h5>
+                    <div class="agrupar">
+                        <img src="../media/mail.svg" alt="contraseña" style="height: 2rem; background-color: gray">
+                        <input autocomplete="off" class="in" type="password" id="txt_pass" name="txt_pass" placeholder="-" required=""/>
+                    </div>
+                </div>
+
+                <div class="check">
+                    <input type="checkbox" class="mycheck" id="mycheck" name="mycheck">
+                    <label for="mycheck">¿Eres paciente?</label>
+                </div>
+                
+                <div class="enviar">
+                    <a href="login.html">
+                        <button type="submit">Registrate</button>
+                    </a>
+                </div>
+    
+                <div class="item">
+                    <h5>¿Ya tienes cuenta?</h5>
+                    <a href="login.html" class="olvidar">Ingresa</a>
+                </div>
+    
+                <div class="item">
+                    <a href="../index.html" class="volver">Regresar al inicio</a>
+                </div>
+            </form>
+        
+        </div>
+        
+    </div>
+    <script src="../js/registro.js"></script>
+</body>
+</html>
