@@ -6,31 +6,25 @@ $email = $_POST['txt_email'];
 $contraseña = $_POST['txt_pass'];
 $esPaciente = isset($_POST['mycheck']) ? true : false;
 
-$response = array(); // Crear un array para la respuesta
+$response = array();
 
 try {
-    $consulta = $conexion->prepare("SELECT * FROM registro WHERE correo = :email");
-    $consulta->bindParam(':email', $email);
-    $consulta->execute();
+    $consultaRegistro = $conexion->prepare("SELECT * FROM registro WHERE correo = :email");
+    $consultaRegistro->bindParam(':email', $email);
+    $consultaRegistro->execute();
 
-    if ($consulta->rowCount() > 0) {
-        $registro = $consulta->fetch(PDO::FETCH_ASSOC);
-        $hashContraseña = $registro['contraseña'];
+    if ($consultaRegistro->rowCount() > 0) {
+        // El correo existe en la tabla "registro"
+        $registro = $consultaRegistro->fetch(PDO::FETCH_ASSOC);
 
-        if (password_verify($contraseña, $hashContraseña)) {
-            $consultaUsuarios = $conexion->prepare("SELECT
-                correo,
-                CASE WHEN id_tipo = 3 THEN 1 ELSE 0 END AS es_deportista
-                FROM usuarios
-                WHERE correo = :email");
+        $consultaUsuarios = $conexion->prepare("SELECT id_tipo FROM usuarios WHERE correo = :email");
+        $consultaUsuarios->bindParam(':email', $email);
+        $consultaUsuarios->execute();
 
-            $consultaUsuarios->bindParam(':email', $email);
-            $consultaUsuarios->execute();
-
-            $usuario = $consultaUsuarios->fetch(PDO::FETCH_ASSOC);
-
-            if ($esPaciente) {
-                if ($usuario['es_deportista'] == 1) {
+        if ($esPaciente) {
+            if ($consultaUsuarios->rowCount() > 0) {
+                $usuario = $consultaUsuarios->fetch(PDO::FETCH_ASSOC);
+                if ($usuario['id_tipo'] == 3) {
                     $_SESSION['correo'] = $email;
                     $response['success'] = true;
                     $response['message'] = 'Ingresas como paciente';
@@ -39,7 +33,13 @@ try {
                     $response['message'] = 'No eres un paciente, no tienes permitido ingresar como paciente';
                 }
             } else {
-                if ($usuario['es_deportista'] == 0) {
+                $response['success'] = false;
+                $response['message'] = 'No estás registrado como paciente';
+            }
+        } else {
+            if ($consultaUsuarios->rowCount() > 0) {
+                $usuario = $consultaUsuarios->fetch(PDO::FETCH_ASSOC);
+                if ($usuario['id_tipo'] != 3) {
                     $_SESSION['correo'] = $email;
                     $response['success'] = true;
                     $response['message'] = 'Ingresas como especialista';
@@ -47,10 +47,11 @@ try {
                     $response['success'] = false;
                     $response['message'] = 'No eres un especialista, no tienes permitido ingresar como especialista';
                 }
+            } else {
+                $_SESSION['correo'] = $email;
+                $response['success'] = true;
+                $response['message'] = 'Ingresas como especialista';
             }
-        } else {
-            $response['success'] = false;
-            $response['message'] = 'La contraseña es incorrecta';
         }
     } else {
         $response['success'] = false;
@@ -61,11 +62,6 @@ try {
     $response['message'] = 'Error en la base de datos';
 }
 
-// Enviar la respuesta JSON
 header('Content-Type: application/json');
 echo json_encode($response);
 ?>
-
-
-
-

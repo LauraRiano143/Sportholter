@@ -15,9 +15,10 @@ document.getElementById('form_login').addEventListener('submit', function(e) {
         .then(data => {
             if (data.success) {
                 if (isPatient) {
-                    
+                    console.log('Acceso paciente');
                     window.location.href = '../Paciente/inicioPaciente.html';
                 } else {
+                    console.log('Acceso especialista');
                     window.location.href = '../Interfaz/configuracion.html';
                 }
             } else {
