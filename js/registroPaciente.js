@@ -59,7 +59,8 @@ document.getElementById('guardar').addEventListener('click', function(e) {
 });
 
 function isValidEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@a-zA-Z0-9.-]+$/;
+    const emailRegex = /^[^\s@]+@[^\s@.-]+\.[^\s@.-]+$/;
+
     if (!emailRegex.test(email)) {
         alert('Por favor, ingresa un correo electrónico válido');
     }else{
