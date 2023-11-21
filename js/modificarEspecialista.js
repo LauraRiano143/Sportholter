@@ -26,10 +26,10 @@ document.getElementById('modificar').addEventListener('click', function(e) {
     })
     .then(res => res.json())
     .then(data => {
-        if (data === 'No hay datos') {
-            console.log('No se encontró el registro para modificar');
-            alert('No se encontró el registro para modificar');
-        } else if (data === 'true') {
+        if (data.success === false) {
+            console.log('Error al modificar:', data.error);
+            alert('Error al modificar el usuario: ' + data.error);
+        } else if (data.success === true) {
             // Restablecer los valores del formulario
             document.getElementById('primer-nombre').value = '';
             document.getElementById('segundo-nombre').value = '';
@@ -41,10 +41,15 @@ document.getElementById('modificar').addEventListener('click', function(e) {
             document.getElementById('fecha-nacimiento').value = '';
             document.getElementById('genero').value = '';
             document.getElementById('telefono').value = '';
-            alert('El usuario se modificó');
+            alert('El usuario se modificó correctamente');
             window.location.href = 'configuracion.html';
         } else {
-            console.log(data);
+            console.log('Respuesta inesperada:', data);
+            alert('Respuesta inesperada del servidor.');
         }
+    })
+    .catch(error => {
+        console.error('Error de red:', error);
+        alert('Hubo un error de red al intentar modificar el usuario.');
     });
 });

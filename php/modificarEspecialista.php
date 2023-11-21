@@ -23,9 +23,14 @@ try {
     $existingUser = $checkQuery->fetch(PDO::FETCH_ASSOC);
 
     if (!$existingUser) {
-        echo json_encode('No hay datos');
+        echo json_encode(['success' => false, 'error' => 'No hay datos']);
         die();
     }
+
+    $documentoExistente = isset($existingUser['numero_documento']) ? $existingUser['numero_documento'] : '';
+    $tipoDocumentoExistente = isset($existingUser['id_tipo']) ? $existingUser['id_tipo'] : '';
+    $n_documento = ($documentoExistente === $n_documento) ? $n_documento : $documentoExistente;
+    $t_documento = ($tipoDocumentoExistente === $t_documento) ? $t_documento : $tipoDocumentoExistente;
 
     $pdo = $conexion->prepare('UPDATE usuarios SET primer_nombre=?, segundo_nombre=?, primer_apellido=?, 
     segundo_apellido=?, id_documento=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, 
@@ -43,17 +48,19 @@ try {
     $pdo->bindValue(10, 2); 
     $pdo->bindValue(11, $email);
 
-    $pdo->execute() or die(print($pdo->errorInfo()));
+    $pdo->execute();
+
     $rowsAffected = $pdo->rowCount();
 
     if ($rowsAffected > 0) {
-        echo json_encode('true');
+        echo json_encode(['success' => true]);
     } else {
-        echo json_encode('false');
+        echo json_encode(['success' => false, 'error' => 'No se afectaron filas']);
     }
 
 } catch(PDOException $error) {
-    echo $error->getMessage();
+    echo json_encode(['success' => false, 'error' => $error->getMessage()]);
     die();
 }
 ?>
+
