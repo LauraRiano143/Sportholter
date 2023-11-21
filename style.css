@@ -145,8 +145,8 @@ header a:hover{
 
 #lista {
     counter-reset: li; 
-    list-style: none; 
-    list-style: decimal; 
+    list-style: none;   
+    *list-style: decimal; 
     font: 15px 'trebuchet MS', 'lucida sans';
     padding: 0;
     margin-bottom: 4em;
@@ -299,7 +299,7 @@ footer .logo{
     border-top-right-radius:0;
 }
 
-.item, .check{
+.item{
     display: flex;
     align-items: center;
     margin-top: 0.1em;
@@ -331,13 +331,13 @@ footer .logo{
     width: 12rem;
 }
 
-.enviar, .item, .check{
+.enviar, .item{
     display: flex;
     justify-content: center;
 }
 
-.enviar, .check{
-    margin-top: 0.9em;
+.enviar{
+    margin-top: 1.5em;
 }
 
 .enviar button{
@@ -360,30 +360,6 @@ footer .logo{
 .registro button:hover{
     background-color: #C1121F;
 }
-
-
-.check label[for="mycheck"] {
-    font-size: 0.9em;
-    color: #2e5b77;
-    font-weight: bold;
-    
-}
-
-.check label {
-    position: relative;
-    padding-left: 20px;
-    cursor: pointer;
-
-}
-
-
-.check label[for="mycheck"] {
-    font-size: 0.8em;
-    color: #2e5b77;
-    font-weight: bold;
-}
-
-
 
 /*Estilos envio de correo*/
 
@@ -608,6 +584,7 @@ ul li:hover {
     box-shadow: 0px 5px 5px -5px rgb(0 0 0/10%);
     background-color: #B0B0B0;
     transition: left 300ms;
+    padding:0;
 }
 
 .header-content,.header-menu{
@@ -1032,7 +1009,6 @@ input[type="text"], input[type="password"] {
 }
 
 @media (min-width: 830px){
-
     header .logo{
         padding-left: 20px;
     }

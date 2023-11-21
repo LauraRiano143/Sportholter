@@ -13,4 +13,5 @@ try {
     echo "Error en la conexión: " . $error->getMessage();
     die();
 }
+
 ?>
