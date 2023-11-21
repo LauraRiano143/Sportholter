@@ -1,6 +1,6 @@
 <?php
-require_once 'conexion.php';
 session_start();
+require_once 'conexion.php';
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -14,47 +14,51 @@ $c_expedicion = isset($data['ciudad-expedicion']) ? $data['ciudad-expedicion'] :
 $f_nacimiento = isset($data['fecha-nacimiento']) ? $data['fecha-nacimiento'] : '';
 $genero = isset($data['genero']) ? $data['genero'] : '';
 $telefono = isset($data['telefono']) ? $data['telefono'] : '';
-$email = isset($data['email']) ? $data['email'] : '';
-$actividad = isset($data['actividad']) ? $data['actividad'] : '';
-$frecuencia = isset($data['frecuencia']) ? $data['frecuencia'] : '';
-
-$nd_especialista = $_SESSION['numero-documento']; 
+$email = isset($_SESSION['correo']) ? $_SESSION['correo'] : '';
 
 try {
-    $pdo = $conexion->prepare('UPDATE usuarios SET num_documento=?, correo=?, primer_nombre=?, segundo_nombre=?, primer_apellido=?, segundo_apellido=?, id_documento=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, id_genero=? WHERE num_documento=?');
-    $pdo->bindValue(1, $n_documento);
-    $pdo->bindValue(2, $email); 
-    $pdo->bindValue(3, $p_nombre);
-    $pdo->bindValue(4, $s_nombre);
-    $pdo->bindValue(5, $p_apellido);
-    $pdo->bindValue(6, $s_apellido);
-    $pdo->bindValue(7, $t_documento);
-    $pdo->bindValue(8, $c_expedicion);
-    $pdo->bindValue(9, $f_nacimiento);
-    $pdo->bindValue(10, $telefono);
-    $pdo->bindValue(11, $genero);
-    $pdo->bindValue(12, $n_documento); 
+    $checkQuery = $conexion->prepare('SELECT * FROM usuarios WHERE correo = ?');
+    $checkQuery->bindValue(1, $email);
+    $checkQuery->execute();
+    $existingUser = $checkQuery->fetch(PDO::FETCH_ASSOC);
 
-    $pdo->execute();
-
-    if ($pdo->rowCount() === 0) {
-        echo json_encode('false');
-        exit();
+    if (!$existingUser) {
+        echo json_encode('No hay datos');
+        die();
     }
 
-    $pdoConsulta = $conexion->prepare('UPDATE consulta SET documento_especialista=?, actividad_fisica=?, frecuencia_actividad=? WHERE documento_paciente=?');
+    $documentoExistente = isset($existingUser['numero_documento']) ? $existingUser['numero_documento'] : '';
+    $tipoDocumentoExistente = isset($existingUser['id_tipo']) ? $existingUser['id_tipo'] : '';
+    $n_documento = ($documentoExistente === $n_documento) ? $n_documento : $documentoExistente;
+    $t_documento = ($tipoDocumentoExistente === $t_documento) ? $t_documento : $tipoDocumentoExistente;
 
-    $pdoConsulta->bindValue(1, $nd_especialista);
-    $pdoConsulta->bindValue(2, $actividad);
-    $pdoConsulta->bindValue(3, $frecuencia);
-    $pdoConsulta->bindValue(4, $n_documento);
     
-    $pdoConsulta->execute();
-    
-    echo json_encode('true');
+    $pdo = $conexion->prepare('UPDATE usuarios SET primer_nombre=?, segundo_nombre=?, primer_apellido=?, 
+    segundo_apellido=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, 
+    id_genero=? WHERE correo=?');
+
+    $pdo->bindValue(1, $p_nombre);
+    $pdo->bindValue(2, $s_nombre);
+    $pdo->bindValue(3, $p_apellido);
+    $pdo->bindValue(4, $s_apellido);
+    $pdo->bindValue(5, $c_expedicion);
+    $pdo->bindValue(6, $f_nacimiento);
+    $pdo->bindValue(7, $telefono);
+    $pdo->bindValue(8, $genero);
+    $pdo->bindValue(9, $email);
+
+    $pdo->execute() or die(print($pdo->errorInfo()));
+    $rowsAffected = $pdo->rowCount();
+
+    if ($rowsAffected > 0) {
+        echo json_encode('true');
+    } else {
+        echo json_encode('No se puede modificar');
+    }
 
 } catch(PDOException $error) {
     echo $error->getMessage();
     die();
 }
+
 ?>

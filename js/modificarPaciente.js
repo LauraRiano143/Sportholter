@@ -1,4 +1,3 @@
-console.log("si");
 document.getElementById('editar').addEventListener('click', function(e) {
     e.preventDefault();
 
@@ -13,15 +12,19 @@ document.getElementById('editar').addEventListener('click', function(e) {
         'fecha-nacimiento': document.getElementById('fecha-nacimiento').value,
         'genero': document.getElementById('genero').value,
         'telefono': document.getElementById('telefono').value,
-        'email': document.getElementById('email').value,
-        'actividad': document.getElementById('actividad').value,
-        'frecuencia': document.getElementById('frecuencia').value
     };
 
     console.log('Datos ingresados:');
     console.log(formulario);
 
-    fetch('../../php/modificarPaciente.php', {
+
+    if (!formulario['primer-nombre'] || !formulario['primer-apellido'] || !formulario['segundo-apellido']|| !formulario['tipo-documento'] || !formulario['numero-documento'] 
+    || !formulario['ciudad-expedicion'] || !formulario['fecha-nacimiento'] || !formulario['genero'] || !formulario['telefono']) {
+        alert('Por favor, complete los campos obligatorios.');
+        return;
+    }
+
+    fetch('../php/modificarPaciente.php', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -41,13 +44,11 @@ document.getElementById('editar').addEventListener('click', function(e) {
             document.getElementById('fecha-nacimiento').value = '';
             document.getElementById('genero').value = '';
             document.getElementById('telefono').value = '';
-            document.getElementById('email').value = '';
-            document.getElementById('actividad').value = '';
-            document.getElementById('frecuencia').value = '';
-            alert('El usuario se modificó');
-            window.location.href = 'consulta_datos_p.html';
+            alert('El usuario se modifico correctamente');
+            window.location.href = 'confPaciente.html';
         } else {
             console.log(data);
+            alert(data);
         }
     });
 });
