@@ -4,11 +4,11 @@ session_start();
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-// Verifica si el especialista ha iniciado sesión
+
 if (isset($_SESSION['numero-documento'])) {
     $nd_especialista = $_SESSION['numero-documento'];
 } else {
-    // Si el especialista no ha iniciado sesión, muestra un mensaje de error o redirige a la página de inicio de sesión
+
     echo json_encode('Especialista no ha iniciado sesion');
     exit;
 }
