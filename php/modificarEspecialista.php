@@ -20,17 +20,26 @@ try {
     $checkQuery = $conexion->prepare('SELECT * FROM usuarios WHERE correo = ?');
     $checkQuery->bindValue(1, $email);
     $checkQuery->execute();
-    $existingUser = $checkQuery->fetch(PDO::FETCH_ASSOC);
+    $resultado = $checkQuery->fetch(PDO::FETCH_ASSOC);
 
-    if (!$existingUser) {
+    if (!$resultado) {
         echo json_encode(['success' => false, 'error' => 'No hay datos']);
         die();
     }
 
-    $documentoExistente = isset($existingUser['numero_documento']) ? $existingUser['numero_documento'] : '';
-    $tipoDocumentoExistente = isset($existingUser['id_tipo']) ? $existingUser['id_tipo'] : '';
-    $n_documento = ($documentoExistente === $n_documento) ? $n_documento : $documentoExistente;
-    $t_documento = ($tipoDocumentoExistente === $t_documento) ? $t_documento : $tipoDocumentoExistente;
+    if ($resultado['id_documento'] != $t_documento || $resultado['num_documento'] != $n_documento) {
+        echo json_encode(['success' => false, 'error' => 'No se puede modificar el tipo de documento ni el número de documento.']);
+        die();
+    }
+
+    $fechaNacimiento = new DateTime($f_nacimiento);
+    $hoy = new DateTime();
+    $edad = $hoy->diff($fechaNacimiento)->y;
+
+    if ($edad < 18) {
+        echo json_encode(['success' => false, 'error' => 'La persona debe tener al menos 18 años']);
+        die();
+    }
 
     $pdo = $conexion->prepare('UPDATE usuarios SET primer_nombre=?, segundo_nombre=?, primer_apellido=?, 
     segundo_apellido=?, id_documento=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, 
@@ -45,7 +54,7 @@ try {
     $pdo->bindValue(7, $f_nacimiento);
     $pdo->bindValue(8, $telefono);
     $pdo->bindValue(9, $genero);
-    $pdo->bindValue(10, 2); 
+    $pdo->bindValue(10, $resultado['id_tipo']); 
     $pdo->bindValue(11, $email);
 
     $pdo->execute();
@@ -63,4 +72,3 @@ try {
     die();
 }
 ?>
-

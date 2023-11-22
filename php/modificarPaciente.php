@@ -23,7 +23,7 @@ $nd_especialista = $_SESSION['numero-documento'];
 try {
     
     if (empty($email)) {
-        echo json_encode('Error: El campo del correo no puede estar vacío.');
+        echo json_encode('El campo del correo no puede estar vacío.');
         die();
     }
 
@@ -34,11 +34,10 @@ try {
     $resultado = $pdoVerificar->fetch(PDO::FETCH_ASSOC);
 
     if ($resultado['id_documento'] != $t_documento || $resultado['num_documento'] != $n_documento) {
-        echo json_encode('Error: No se puede modificar el tipo de documento ni el número de documento.');
+        echo json_encode('No se puede modificar el tipo de documento ni el número de documento.');
         die();
     }
 
-    // Si no se intenta modificar tipo de documento ni número de documento, se procede con la actualización
     $pdoUsuarios = $conexion->prepare('UPDATE usuarios SET correo=?, primer_nombre=?, segundo_nombre=?, primer_apellido=?, 
         segundo_apellido=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, id_genero=? WHERE num_documento=?');
     $pdoUsuarios->bindValue(1, $email);
@@ -54,9 +53,8 @@ try {
 
     $pdoUsuarios->execute();
 
-    // Verificar si se afectó alguna fila en la actualización
     if ($pdoUsuarios->rowCount() === 0) {
-        echo json_encode('Error: No se realizó ninguna modificación.');
+        echo json_encode('No se realizó ninguna modificación.');
         die();
     }
 
