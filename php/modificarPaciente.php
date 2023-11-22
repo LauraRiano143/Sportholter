@@ -1,6 +1,6 @@
 <?php
-session_start();
 require_once 'conexion.php';
+session_start();
 
 $data = json_decode(file_get_contents("php://input"), true);
 
@@ -14,51 +14,77 @@ $c_expedicion = isset($data['ciudad-expedicion']) ? $data['ciudad-expedicion'] :
 $f_nacimiento = isset($data['fecha-nacimiento']) ? $data['fecha-nacimiento'] : '';
 $genero = isset($data['genero']) ? $data['genero'] : '';
 $telefono = isset($data['telefono']) ? $data['telefono'] : '';
-$email = isset($_SESSION['correo']) ? $_SESSION['correo'] : '';
+$email = isset($data['email']) ? $data['email'] : '';
+$actividad = isset($data['actividad']) ? $data['actividad'] : ''; 
+$frecuencia = isset($data['frecuencia']) ? $data['frecuencia'] : ''; 
+
+$nd_especialista = $_SESSION['numero-documento'];
 
 try {
-    $checkQuery = $conexion->prepare('SELECT * FROM usuarios WHERE correo = ?');
-    $checkQuery->bindValue(1, $email);
-    $checkQuery->execute();
-    $existingUser = $checkQuery->fetch(PDO::FETCH_ASSOC);
-
-    if (!$existingUser) {
-        echo json_encode('No hay datos');
+    
+    if (empty($email)) {
+        echo json_encode('Error: El campo del correo no puede estar vacío.');
         die();
     }
 
-    $documentoExistente = isset($existingUser['numero_documento']) ? $existingUser['numero_documento'] : '';
-    $tipoDocumentoExistente = isset($existingUser['id_tipo']) ? $existingUser['id_tipo'] : '';
-    $n_documento = ($documentoExistente === $n_documento) ? $n_documento : $documentoExistente;
-    $t_documento = ($tipoDocumentoExistente === $t_documento) ? $t_documento : $tipoDocumentoExistente;
+    // Verificar si el tipo de documento o el número de documento son distintos a los originales
+    $pdoVerificar = $conexion->prepare('SELECT id_documento, num_documento FROM usuarios WHERE num_documento=?');
+    $pdoVerificar->bindValue(1, $n_documento);
+    $pdoVerificar->execute();
+    $resultado = $pdoVerificar->fetch(PDO::FETCH_ASSOC);
 
-    
-    $pdo = $conexion->prepare('UPDATE usuarios SET primer_nombre=?, segundo_nombre=?, primer_apellido=?, 
-    segundo_apellido=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, 
-    id_genero=? WHERE correo=?');
-
-    $pdo->bindValue(1, $p_nombre);
-    $pdo->bindValue(2, $s_nombre);
-    $pdo->bindValue(3, $p_apellido);
-    $pdo->bindValue(4, $s_apellido);
-    $pdo->bindValue(5, $c_expedicion);
-    $pdo->bindValue(6, $f_nacimiento);
-    $pdo->bindValue(7, $telefono);
-    $pdo->bindValue(8, $genero);
-    $pdo->bindValue(9, $email);
-
-    $pdo->execute() or die(print($pdo->errorInfo()));
-    $rowsAffected = $pdo->rowCount();
-
-    if ($rowsAffected > 0) {
-        echo json_encode('true');
-    } else {
-        echo json_encode('No se puede modificar');
+    if ($resultado['id_documento'] != $t_documento || $resultado['num_documento'] != $n_documento) {
+        echo json_encode('Error: No se puede modificar el tipo de documento ni el número de documento.');
+        die();
     }
 
+    // Si no se intenta modificar tipo de documento ni número de documento, se procede con la actualización
+    $pdoUsuarios = $conexion->prepare('UPDATE usuarios SET correo=?, primer_nombre=?, segundo_nombre=?, primer_apellido=?, 
+        segundo_apellido=?, ciudad_expedicion=?, fecha_nacimiento=?, telefono=?, id_genero=? WHERE num_documento=?');
+    $pdoUsuarios->bindValue(1, $email);
+    $pdoUsuarios->bindValue(2, $p_nombre);
+    $pdoUsuarios->bindValue(3, $s_nombre);
+    $pdoUsuarios->bindValue(4, $p_apellido);
+    $pdoUsuarios->bindValue(5, $s_apellido);
+    $pdoUsuarios->bindValue(6, $c_expedicion);
+    $pdoUsuarios->bindValue(7, $f_nacimiento);
+    $pdoUsuarios->bindValue(8, $telefono);
+    $pdoUsuarios->bindValue(9, $genero);
+    $pdoUsuarios->bindValue(10, $n_documento);
+
+    $pdoUsuarios->execute();
+
+    // Verificar si se afectó alguna fila en la actualización
+    if ($pdoUsuarios->rowCount() === 0) {
+        echo json_encode('Error: No se realizó ninguna modificación.');
+        die();
+    }
+
+    if (!empty($actividad) || !empty($frecuencia)) {
+        $pdoConsultaCheck = $conexion->prepare('SELECT * FROM consulta WHERE documento_especialista=?');
+        $pdoConsultaCheck->bindValue(1, $nd_especialista);
+        $pdoConsultaCheck->execute();
+
+        if ($pdoConsultaCheck->rowCount() > 0) {
+            $pdoConsultaUpdate = $conexion->prepare('UPDATE consulta SET actividad_fisica=?, frecuencia_actividad=? WHERE documento_especialista=?');
+            $pdoConsultaUpdate->bindValue(1, $actividad);
+            $pdoConsultaUpdate->bindValue(2, $frecuencia);
+            $pdoConsultaUpdate->bindValue(3, $nd_especialista);
+            $pdoConsultaUpdate->execute();
+        } else {
+            $pdoConsultaInsert = $conexion->prepare('INSERT INTO consulta (documento_paciente, actividad_fisica, frecuencia_actividad, documento_especialista) VALUES (?, ?, ?, ?)');
+            $pdoConsultaInsert->bindValue(1, $n_documento);
+            $pdoConsultaInsert->bindValue(2, $actividad);
+            $pdoConsultaInsert->bindValue(3, $frecuencia);
+            $pdoConsultaInsert->bindValue(4, $nd_especialista);
+            $pdoConsultaInsert->execute();
+        }
+    }
+
+    echo json_encode('true');
+
 } catch(PDOException $error) {
-    echo $error->getMessage();
+    echo json_encode('Error en la ejecución: ' . $error->getMessage());
     die();
 }
-
 ?>
