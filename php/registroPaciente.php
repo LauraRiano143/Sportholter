@@ -4,7 +4,15 @@ session_start();
 
 $data = json_decode(file_get_contents("php://input"), true);
 
-$nd_especialista = isset($_SESSION['numero-documento']) ? $_SESSION['numero-documento'] : '';
+// Verifica si el especialista ha iniciado sesión
+if (isset($_SESSION['numero-documento'])) {
+    $nd_especialista = $_SESSION['numero-documento'];
+} else {
+    // Si el especialista no ha iniciado sesión, muestra un mensaje de error o redirige a la página de inicio de sesión
+    echo json_encode('Especialista no ha iniciado sesion');
+    exit;
+}
+
 $p_nombre = isset($data['primer-nombre']) ? $data['primer-nombre'] : '';
 $s_nombre = isset($data['segundo-nombre']) ? $data['segundo-nombre'] : '';
 $p_apellido = isset($data['primer-apellido']) ? $data['primer-apellido'] : '';
@@ -20,14 +28,13 @@ $actividad = isset($data['actividad']) ? $data['actividad'] : '';
 $frecuencia = isset($data['frecuencia']) ? $data['frecuencia'] : '';
 $fechaActual = date('Y-m-d');
 
-
 try {
-
     $pdo = $conexion->prepare('INSERT INTO usuarios(num_documento, correo, primer_nombre, segundo_nombre,
     primer_apellido, segundo_apellido, id_documento, ciudad_expedicion, fecha_nacimiento, telefono,
     id_genero, id_tipo) VALUES(?,?,?,?,?,?,?,?,?,?,?,?)');
+    
     $pdo->bindValue(1, $n_documento);
-    $pdo->bindValue(2, $email); 
+    $pdo->bindValue(2, $email);
     $pdo->bindValue(3, $p_nombre);
     $pdo->bindValue(4, $s_nombre);
     $pdo->bindValue(5, $p_apellido);
@@ -37,7 +44,7 @@ try {
     $pdo->bindValue(9, $f_nacimiento);
     $pdo->bindValue(10, $telefono);
     $pdo->bindValue(11, $genero);
-    $pdo->bindValue(12, 3); 
+    $pdo->bindValue(12, 3);
 
     $pdo->execute() or die(print_r($pdo->errorInfo()));
 
@@ -47,7 +54,7 @@ try {
     documento_especialista, actividad_fisica, frecuencia_actividad) VALUES(?,?,?,?,?)');
 
     $pdo->bindValue(1, $fechaActual);
-    $pdo->bindValue(2, $n_documento); 
+    $pdo->bindValue(2, $n_documento);
     $pdo->bindValue(3, $nd_especialista);
     $pdo->bindValue(4, $actividad);
     $pdo->bindValue(5, $frecuencia);
@@ -55,9 +62,8 @@ try {
     $pdo->execute() or die(print_r($pdo->errorInfo()));
     echo json_encode('true');
 
-} catch(PDOException $error) {
+} catch (PDOException $error) {
     echo $error->getMessage();
     die();
 }
 ?>
-
