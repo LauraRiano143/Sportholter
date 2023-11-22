@@ -45,6 +45,7 @@ document.getElementById('guardar').addEventListener('click', function(e) {
             document.getElementById('genero').value = '';
             document.getElementById('telefono').value = '';
             alert('El usuario se insertó correctamente');
+            window.location.href = 'configuracion.html';
         } else {
             console.log(data);
         }

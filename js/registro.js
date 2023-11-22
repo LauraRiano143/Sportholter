@@ -6,20 +6,18 @@ document.getElementById('form_register').addEventListener('submit', function(e) 
     let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   
     var thisRegex = new RegExp("(?=.*[0-9])");
-    var thisRegex2 = new RegExp("(?=.[a-z])");
+    var thisRegex2 = new RegExp("(?=.*[a-z])");
+    var thisRegexMayuscula = new RegExp("(?=.*[A-Z])");
   
     if (contraseña.length < 8) {
         alert("La contraseña debe tener al menos 8 caracteres");
-    }
-    
-    else if ( !thisRegex.test(contraseña)) {
+    } else if (!thisRegex.test(contraseña)) {
         alert("La contraseña debe tener al menos un número");
-    }
-    
-    else if ( !thisRegex2.test(contraseña)) {
-        alert("La contraseña debe tener al menos una letra");
-    }
-    else if (nombre === '' || email === '' || contraseña === '') {
+    } else if (!thisRegex2.test(contraseña)) {
+        alert("La contraseña debe tener al menos una letra minúscula");
+    } else if (!thisRegexMayuscula.test(contraseña)) {
+        alert("La contraseña debe tener al menos una letra mayúscula");
+    } else if (nombre === '' || email === '' || contraseña === '') {
         alert('Por favor, completa todos los campos');
     } else if (!emailRegex.test(email)) {
         alert('Por favor, ingresa un correo electrónico válido');
@@ -45,4 +43,5 @@ document.getElementById('form_register').addEventListener('submit', function(e) 
               }
           });
     }
-  });
+});
+

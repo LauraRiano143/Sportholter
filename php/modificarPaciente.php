@@ -27,7 +27,6 @@ try {
         die();
     }
 
-    // Verificar si el tipo de documento o el número de documento son distintos a los originales
     $pdoVerificar = $conexion->prepare('SELECT id_documento, num_documento FROM usuarios WHERE num_documento=?');
     $pdoVerificar->bindValue(1, $n_documento);
     $pdoVerificar->execute();
@@ -53,10 +52,9 @@ try {
 
     $pdoUsuarios->execute();
 
-    if ($pdoUsuarios->rowCount() === 0) {
-        echo json_encode('No se realizó ninguna modificación.');
-        die();
-    }
+    $modificacionesUsuarios = $pdoUsuarios->rowCount();
+
+    $pdoConsultaInsert = null; // Inicializar $pdoConsultaInsert
 
     if (!empty($actividad) || !empty($frecuencia)) {
         $pdoConsultaCheck = $conexion->prepare('SELECT * FROM consulta WHERE documento_especialista=?');
@@ -77,6 +75,11 @@ try {
             $pdoConsultaInsert->bindValue(4, $nd_especialista);
             $pdoConsultaInsert->execute();
         }
+    }
+
+    if ($modificacionesUsuarios === 0 && (!$pdoConsultaInsert || $pdoConsultaInsert->rowCount() === 0) && $pdoConsultaUpdate->rowCount() === 0) {
+        echo json_encode('No se realizó ninguna modificación.');
+        die();
     }
 
     echo json_encode('true');
