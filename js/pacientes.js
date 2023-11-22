@@ -2,14 +2,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('.fecha');
     const url = '../php/pacientes.php';
   
-    // Obtener todos los usuarios al cargar la página
     getData(url)
       .then(data => {
         displayData(data);
       });
   
     form.addEventListener('submit', function(e) {
-      e.preventDefault(); // Evitar el envío del formulario
+      e.preventDefault(); 
       
       const fecha = document.getElementById('fecha').value;
       const data = new FormData();
@@ -43,7 +42,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
     function displayData(data) {
       const tableBody = document.querySelector('.table__body tbody');
-      tableBody.innerHTML = ''; // Limpiar el contenido de la tabla
+      tableBody.innerHTML = ''; 
   
       if (data.length === 0) {
         console.log('No hay datos disponibles');

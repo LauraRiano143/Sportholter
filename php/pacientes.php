@@ -13,25 +13,28 @@ try {
     $medicoData = $pdoIdMedico->fetch(PDO::FETCH_ASSOC);
 
     if ($medicoData['id_tipo'] == 2) {
-        // El usuario es un especialista
-        $campoDocumento = 'documento_especialista';
+        $campoDocumentoEspecialista = 'documento_especialista';
+        $campoDocumentoPaciente = 'documento_paciente';
     } elseif ($medicoData['id_tipo'] == 3) {
-        // El usuario es un paciente
-        $campoDocumento = 'documento_paciente';
+        $campoDocumentoEspecialista = 'documento_paciente';
+        $campoDocumentoPaciente = 'documento_paciente';
     }
 
     if ($fecha !== '') {
         $pdoConsulta = $conexion->prepare("SELECT u.primer_nombre, u.primer_apellido, u.num_documento, 
         CASE WHEN c.ECG IS NULL THEN 'No' ELSE 'Sí' END AS tiene_ECG, c.fecha_consulta 
         FROM usuarios u 
-        JOIN consulta c ON u.num_documento = c.$campoDocumento 
-        WHERE c.fecha_consulta = ?");
+        JOIN consulta c ON u.num_documento = c.$campoDocumentoPaciente 
+        WHERE c.fecha_consulta = ? AND c.$campoDocumentoEspecialista = ?");
         $pdoConsulta->bindValue(1, $fecha);
+        $pdoConsulta->bindValue(2, $medicoData['num_documento']);
     } else {
         $pdoConsulta = $conexion->prepare("SELECT u.primer_nombre, u.primer_apellido, u.num_documento, 
         CASE WHEN c.ECG IS NULL THEN 'No' ELSE 'Sí' END AS tiene_ECG, c.fecha_consulta 
         FROM usuarios u 
-        JOIN consulta c ON u.num_documento = c.$campoDocumento");
+        JOIN consulta c ON u.num_documento = c.$campoDocumentoPaciente 
+        WHERE c.$campoDocumentoEspecialista = ?");
+        $pdoConsulta->bindValue(1, $medicoData['num_documento']);
     }
 
     $pdoConsulta->execute();
