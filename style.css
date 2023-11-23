@@ -146,7 +146,7 @@ header a:hover{
 #lista {
     counter-reset: li; 
     list-style: none;   
-    *list-style: decimal; 
+    list-style: decimal; 
     font: 15px 'trebuchet MS', 'lucida sans';
     padding: 0;
     margin-bottom: 4em;
