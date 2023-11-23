@@ -21,7 +21,7 @@ try {
     if ($result) {
         echo json_encode($result);
     } else {
-        echo json_encode(array()); // Devolver un arreglo vacío si no hay registros encontrados
+        echo json_encode(array()); 
     }
 } catch(PDOException $error) {
     echo $error->getMessage();
