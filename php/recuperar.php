@@ -6,7 +6,7 @@ $token = bin2hex(random_bytes(16));
 
 $token_hash = hash("sha256", $token);
 
-$expiry= date("Y-m-d H:i:s", time() + 60 * 30);
+$expiry= date("Y-m-d H:i:s", time() + 60 * 5);
 
 $mysqli = require __DIR__ . "/database.php";
 
@@ -31,14 +31,13 @@ if ($mysqli->affected_rows){
     $mail->Subject = "Password Reset";
     $mail->Body = <<<END
 
-    Click  <a href="http://example.com/reset-password.php?token=$token">here</a>
+    Click  <a href="http://localhost/Sportholter/php/reset_password.php?token=$token">here</a>
     to reset your password.
 
     END;
 
     try {
         $mail->send(); 
-        echo "Hellou";
     } catch (Exception $e) {
         echo "Not send. Mailer error: {$mail->ErrorInfo}";
     }
